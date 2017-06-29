@@ -1,0 +1,8 @@
+RewriteEngine On
+
+
+
+RewriteRule ^([\w-]+)$ profile.php?profile_username=$1
+RewriteRule ^([\w-]+)/$ profile.php?profile_username=$1
+# RewriteRule ^([a-zA-Z0-9]+)$ profile.php?profile_username=$1   [NC,L]
+# RewriteRule ^([a-zA-Z0-9]+)/$ profile.php?profile_username=$1  [NC,L]

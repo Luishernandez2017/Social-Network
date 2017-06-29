@@ -117,14 +117,13 @@
 
 
             }
+   $defaultPics = array(
+	   "alizarin", "amethyst", "belize_hole", "carrot", "deep_blue", "emerald", "green_sea", "nephritis",
+		"pete_river", "pomegranate", "pumpkin", "red", "sun_flower", "turqoise", "wet_asphalt", "wisteria"
+   );
 
-            $rand = rand(1,2);
-            if($rand == 1){
-                $profile_pic= "assets/images/profile_pics/defaults/head_red.png";
-            }else if($rand == 2){
-            $profile_pic= "assests/images/profile_pics/defaults/head_deep_blue.png";
-        }
-
+		$profile_pic = "assets/images/profile_pics/defaults/head_".$defaultPics[array_rand($defaultPics, 1)].".png";
+			
         $query = mysqli_query($con, "INSERT INTO users (first_name, last_name, username, email, password, signup_date, profile_pic, num_posts, num_likes)
         VALUES ('$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0','0' )");
 

@@ -1,7 +1,7 @@
 
 <?php
  $title= 'Login';
- require ('config.php');
+ require ('includes/classes/Config.php');
  //require('includes/layouts/header.php');
  require ('includes/form_handlers/register_handler.php');
  require ('includes/form_handlers/login_handler.php');
@@ -94,7 +94,7 @@ $success = (isset($success)?$success: null);
                     <br/>
                     <input type="submit" class="submit" name="register_button" value="Register">
                     <br/>
-                    <div  <div class="error-msg-container">
+                    <div class="error-msg-container">
                     <?php 
                         displayMessage($error_array, $success); 
 

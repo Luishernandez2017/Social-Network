@@ -1,6 +1,9 @@
 <?php
- require ('config.php');
+ require ('includes/classes/Config.php');
+ require('includes/classes/User.php');
+  require('includes/classes/Post.php');
 // session_destroy();
+
 if(isset($_SESSION['username'])){
     $userLoggedIn = $_SESSION['username'];
     $user_details_query =mysqli_query($con, "SELECT *FROM users WHERE username='$userLoggedIn'");
@@ -50,12 +53,13 @@ echo  "<title>{$title}</title>";
                 <a href="index.php">SwirlFeed!</a>
         </div>
         <nav>
-                <i id="username"><?php echo $user_firstname; ?></i>
-                <a href="#" ><i class="fa fa-home fa-lg"></i></a>
+               <a href="<?php echo $userLoggedIn; ?>"> <i id="username"><?php echo $user_firstname; ?></i></a>
+                <a href="index.php" ><i class="fa fa-home fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-envelope-o fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-bell-o fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-users fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-cog fa-lg"></i></a>
+                <a href="includes/handlers/logout_handler.php" ><i class="fa fa-sign-out fa-lg"></i></a>
 
 
         </nav>
