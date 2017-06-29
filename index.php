@@ -38,12 +38,6 @@
 </div>
 
 <?php require('./assets/js/infinite_scroll.php');?>
-<!--
-
-<script type="text/javascript" src="assets/js/ininite_scroll.js">
-	
-</script>
--->
 
 
 

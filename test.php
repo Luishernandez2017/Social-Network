@@ -9,32 +9,13 @@ require('includes/classes/Post.php');
 <?php
 $user = new User($con, 'juan_masa');
 $username= $user->getUsername();
+$id =5;
 
-//$sql = mysqli_query($con, "SELECT friend_array FROM users WHERE username = '$username'");
-//$row = mysqli_fetch_array($sql);
-//$friends = $row[0];
-//echo $friends;
-//$friendsArray =explode(", ",$friends);
-//
-//foreach($friendsArray as $friend){
-//	echo "<br/>".$friend."<br/>";
-//}
-//
-//if(in_array('john_doe', $friendsArray)){
-//	echo "yes";
-//}
-
-if($user->isFriend('john_doe')){
-	echo "yes";
-}else{
-	echo "no";
-}
-//$getTable = mysqli_query($con, "SHOW CREATE TABLE users");
-//
-//while($row =mysqli_fetch_row($getTable)){
-//    var_dump ($row);
-//};
-
+$str = "<div class='post_comment' id='toggleComment$id' style='display:block;'>";
+					$str .="<iframe src='http://localhost/PHP-course/Udemy%20PHP/SOCIAL_NETWORK/includes/classes/comment_frame.php?post_id=$id' id='comment_iframe' frameborder='0'></iframe>";
+					$str .="</div>";
+				
+	echo $str;
    
 
 ?>

@@ -101,9 +101,9 @@ $userLoggedIn = $this->user_obj->getUsername();
 					if($num_iterations++ < $start){
 						continue;//go back to top
 					}
-	//				
-	//			//once 10 post have be loaded break
-	//				
+					
+				//once 10 post have be loaded break
+				
 					if($count > $limit){
 						break;//stop while
 					}else{
@@ -121,6 +121,27 @@ $userLoggedIn = $this->user_obj->getUsername();
 				  $first_name = $user_row ['first_name'];
 				  $last_name = $user_row ['last_name'];
 				  $profile_pic = $user_row ['profile_pic'];
+
+
+/*****************   Comments  **********************/
+?>
+<script>
+
+function toggle<?php echo $id; ?>(){
+	var element = document.getElementById("toggleComment<?php echo $id; ?>");
+
+	if(element.style.display == "block"){
+		element.style.display = "none";
+	}else{
+		element.style.display = "block";
+	}
+}
+
+
+</script>
+
+
+<?php
 
 
 				  //Time Frame
@@ -204,7 +225,7 @@ $userLoggedIn = $this->user_obj->getUsername();
 
 				  }//end of if Time Block
 
-					$str .="<div class='status_post'>";
+					$str .="<div class='status_post' onClick='javascript:toggle$id()'>";
 
 					$str .="<div class='post_profile_pic'>";
 					$str .="<img src='$profile_pic'>";
@@ -215,9 +236,13 @@ $userLoggedIn = $this->user_obj->getUsername();
 					$str .="$user_to &nbsp;&nbsp;&nbsp;&nbsp;$time_message";
 					$str .="</div>";
 
-					$str .="<div id='post_body'>$body<br></div>";
+					$str .="<div id='post_body'>$body<br><br><br></div>";
 
 					$str .="</div>";
+					$str .="<div class='post_comment' id='toggleComment$id' style='display:none;'>";
+					$str .="<iframe src='http://localhost/PHP-course/Udemy%20PHP/SOCIAL_NETWORK/includes/classes/comment_frame.php?post_id=$id' id='comment_iframe' frameborder='0'></iframe>";
+					$str .="</div>";
+				
 					$str .="<hr/>";
 				}
 			}

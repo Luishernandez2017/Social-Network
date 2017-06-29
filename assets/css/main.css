@@ -158,38 +158,40 @@ textarea:focus {
     color: #fff;
 }
 
-.status_post{
- width: 96%;
+.status_post {
+    width: 96%;
     font-size: 15px;
     padding: 0px 5px;
     min-height: 75px;
 }
 
-.post_profile_pic{
-
-	float: left;
-	margin-right: 7px;
+.post_profile_pic {
+    float: left;
+    margin-right: 7px;
 }
-.post_profile_pic img{
-	border-radius: 5px;
-	height: 70px;
-/*
+
+.post_profile_pic img {
+    border-radius: 5px;
+    height: 70px;
+    /*
 	width: 50;
 	height: 50;
 */
 }
 
-#loading{
-	width: 70px;
-	position: absolute;
-	bottom: 4%;
-	right: 50%;
+#loading {
+    width: 70px;
+    position: absolute;
+    bottom: 4%;
+    right: 50%;
 }
-.hide{
-	display: none;
-	margin: 0;
-	padding: 0;
+
+.hide {
+    display: none;
+    margin: 0;
+    padding: 0;
 }
-.no-posts{
-	color:#ACACAC;
+
+.no-posts {
+    color: #ACACAC;
 }

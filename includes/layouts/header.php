@@ -2,6 +2,7 @@
  require ('includes/classes/Config.php');
  require('includes/classes/User.php');
   require('includes/classes/Post.php');
+
 // session_destroy();
 
 if(isset($_SESSION['username'])){
@@ -48,7 +49,10 @@ echo  "<title>{$title}</title>";
     </head>
     <body>
 
-     <div class="top_bar">
+    <?php 
+    $addNav=(isset($addNav)?$addNav:true) ;
+    if($addNav){?>
+         <div class="top_bar">
         <div class="logo">
                 <a href="index.php">SwirlFeed!</a>
         </div>
@@ -66,6 +70,12 @@ echo  "<title>{$title}</title>";
      </div>
      <div class="wrapper">
 
+    
+    
+    
+    <?php  }; ?>
+
+    
 
      <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
