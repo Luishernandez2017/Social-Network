@@ -1,8 +1,9 @@
 <?php 
 
-require ('Config.php');
- require('User.php');
-  require('Post.php');
+require ('../classes/Config.php');
+include_once('../classes/functions.php');//require cuae redeclaration of function
+require('../classes/User.php');
+require('../classes/Post.php');
 ?>
 <html lang="en">
 <head>
@@ -13,6 +14,13 @@ require ('Config.php');
 <link rel="stylesheet" type="text/css" href="../../assets/css/main.css"/>
 
     </head>
+    <style type="text/css">
+	* {
+		font-size: 12px;
+		font-family: Arial, Helvetica, Sans-serif;
+	}
+
+	</style>
     <body>
 <?php
 // session_destroy();
@@ -75,9 +83,59 @@ if(isset($_POST['postComment'.$post_id])){
 
 <input type="submit" name="postComment<?php echo $post_id; ?>" value="Post">
 
-
-
     </form>
+<!--- Load Comments-->
+
+<?php
+//echo $post_id;
+$sql = "SELECT * FROM comments WHERE post_id= '$post_id' ORDER BY date_added DESC";
+$get_comments  = mysqli_query($con, $sql);
+
+//var_dump(mysqli_error($con));
+$count = mysqli_num_rows($get_comments);//number of comments per user
+
+            if($count != 0){
+                while($comment = mysqli_fetch_array($get_comments)){
+                    $comments_body  = $comment['post_body'];
+                    $posted_to      = $comment['posted_to'];
+                    $posted_by      = $comment['posted_by'];
+                    $date_added     = $comment['date_added'];
+                    $removed        = $comment['removed'];
+
+               	$time_message=dateAdded($date_added);//functions.php
+
+                   $user_obj = new User($con, $posted_by);
+
+                   ?>
+                   
+                   
+<div id="comment_section">
+    <a href="../../<?php  echo  $posted_by; ?>" target="_parent">
+  <img src="../../<?php echo $user_obj->getUserPic(); ?>" 
+  width='40px'height='40px' style="float:left;" <?php echo $posted_by;?>/>
+    </a>
+
+    <a href="../../<?php  echo  $posted_by; ?>" target="_parent">
+        <b><?php echo $user_obj->getFullName(); ?> </b>
+     </a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <?php echo $time_message ."<br>". $comments_body?>
+
+
+</div>
+                   <br/>
+                   <?php
+                }
+              
+              
+            }else{
+                echo "<center style='color: #ACACAC'><br><br><br>No comments to show.</center>";
+            }
+
+?>
+
+
+</div>
+
 
 </body>
 </html>

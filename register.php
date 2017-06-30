@@ -100,7 +100,7 @@ $success = (isset($success)?$success: null);
 
                     ?>
                     </div>
-                <a href="#" id="loginLink" class="signup" >Need an account? Register Here!</a>
+                <a href="#" id="loginLink" class="signup" >Already have an account?<br/> Login Here!</a>
 
                 </form>
             </div> <!--end of signup-container-->
