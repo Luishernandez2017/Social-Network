@@ -267,16 +267,7 @@ $userLoggedIn = $this->user_obj->getUsername();
 
 			}
 
-			public function countItems($count, $limit){
-		
-					if($count > $limit){
-						break;//stop while
-					}else{
-						
-					$count++;//continue to increment post loaded
-					}
-					return $count;
-			}
+
 }
 
 
