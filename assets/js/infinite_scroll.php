@@ -1,9 +1,10 @@
-
 <script>
-	var userLoggedIn = '<?php echo $userLoggedIn; ?>';
-	
+
+    var data = '<?php echo $ajaxData; ?>';
+ 
+    var url = '<?php echo $ajaxUrl; ?>';
 	$(document).ready(function(){
-		$('.posts_area').html(userLoggedIn);
+		//$('.posts_area').html(userLoggedIn);
 		
 		$('#loading').show();
 		
@@ -11,9 +12,9 @@
 		//LOAD 10 POSTS
 		//original ajax request for loading posts	
 		$.ajax({
-			url: "includes/handlers/ajax_load_posts.php",
+			url: url,
 			type: "POST",
-			data:"page=1&userLoggedIn="+ userLoggedIn,
+			data:"page=1&userLoggedIn="+ data,
 			cache: false,
 			
 			success: function(data){
@@ -41,9 +42,9 @@
 				
 		//MAKE A SECOND REQUEST
 	var ajaxReq=	$.ajax({
-			url: "includes/handlers/ajax_load_posts.php",
+			url: url,
 			type: "POST",
-			data:"page=" + page + "&userLoggedIn=" + userLoggedIn,
+			data:"page=" + page + "&userLoggedIn=" + data,
 			cache: false,
 			
 			success: function(response){

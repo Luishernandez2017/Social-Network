@@ -14,11 +14,12 @@ require('../classes/Post.php');
 <link rel="stylesheet" type="text/css" href="../../assets/css/main.css"/>
 
     </head>
-    <style type="text/css">
+    <style>
 	* {
 		font-size: 12px;
 		font-family: Arial, Helvetica, Sans-serif;
 	}
+
 
 	</style>
     <body>

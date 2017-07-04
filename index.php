@@ -3,6 +3,8 @@
 
 
 <?php 
+$ajaxUrl= "includes/handlers/ajax_load_posts.php";
+$ajaxData="$userLoggedIn";
 
         if(isset($_POST['post'])){
                 $post = new Post($con, $userLoggedIn);
@@ -11,7 +13,7 @@
         }
 
 ?>
-
+    
 <div class="user_details column"> 
         <a href="<?php echo $userLoggedIn; ?>"><img  src="<?php echo $user['profile_pic'];    ?>"/></a>
 

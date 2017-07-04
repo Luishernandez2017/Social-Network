@@ -40,11 +40,12 @@ echo  "<title>{$title}</title>";
          <title><?php echo (isset($title)?$title: 'Home'); ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-     
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
      
     </head>
     <body>
@@ -61,7 +62,7 @@ echo  "<title>{$title}</title>";
                 <a href="index.php" ><i class="fa fa-home fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-envelope-o fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-bell-o fa-lg"></i></a>
-                <a href="#" ><i class="fa fa-users fa-lg"></i></a>
+                <a href="requests.php" ><i class="fa fa-users fa-lg"></i></a>
                 <a href="#" ><i class="fa fa-cog fa-lg"></i></a>
                 <a href="includes/handlers/logout_handler.php" ><i class="fa fa-sign-out fa-lg"></i></a>
 
