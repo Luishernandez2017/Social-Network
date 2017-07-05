@@ -1,4 +1,6 @@
-<?php require('./includes/layouts/header.php'); ?>
+<?php 
+$title = 'Friend Requests';
+require('./includes/layouts/header.php'); ?>
 <style>
 
     h4, p{

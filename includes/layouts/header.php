@@ -1,7 +1,8 @@
 <?php
  require ('includes/classes/Config.php');
  require('includes/classes/User.php');
-  require('includes/classes/Post.php');
+ require('includes/classes/Post.php');
+ require('includes/classes/Message.php');
 
 // session_destroy();
 
@@ -17,7 +18,7 @@ if(isset($_SESSION['username'])){
 }
 
 
- $title = (isset($title)?$title:'Home');
+ $title = (isset($title)?"SN: ".$title:'SN: Home');
 
 function setTitle($title){
 echo  "<title>{$title}</title>";
@@ -42,6 +43,8 @@ echo  "<title>{$title}</title>";
         <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/jcrop_bits.js"></script>
+<script type="text/javascript" src="assets/js/jquery.Jcrop.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -52,31 +55,10 @@ echo  "<title>{$title}</title>";
 
     <?php 
     $addNav=(isset($addNav)?$addNav:true) ;
-    if($addNav){?>
-         <div class="top_bar">
-        <div class="logo">
-                <a href="index.php">SwirlFeed!</a>
-        </div>
-        <nav>
-               <a href="<?php echo $userLoggedIn; ?>"> <i id="username"><?php echo $user_firstname; ?></i></a>
-                <a href="index.php" ><i class="fa fa-home fa-lg"></i></a>
-                <a href="#" ><i class="fa fa-envelope-o fa-lg"></i></a>
-                <a href="#" ><i class="fa fa-bell-o fa-lg"></i></a>
-                <a href="requests.php" ><i class="fa fa-users fa-lg"></i></a>
-                <a href="#" ><i class="fa fa-cog fa-lg"></i></a>
-                <a href="includes/handlers/logout_handler.php" ><i class="fa fa-sign-out fa-lg"></i></a>
-
-
-        </nav>
-     </div>
+    if($addNav){
+         include('nav.php');
+        }; ?>
      <div class="wrapper">
-
-    
-    
-    
-    <?php  }; ?>
-
-    
 
      <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>

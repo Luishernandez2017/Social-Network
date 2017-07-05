@@ -1,5 +1,7 @@
 
-<?php require('./includes/layouts/header.php'); ?>
+<?php 
+$title = 'Closed';
+require('./includes/layouts/header.php'); ?>
 
 <div class="main_column column" id="main_column">
     <h4>User Closed</h4>

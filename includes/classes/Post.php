@@ -10,64 +10,64 @@ class Post{
         $this->con=$con;
         $this->user_obj = new User($con, $user);
 
-    }
+    	}
 
-public function submitPost($body, $user_to){
-    $body = strip_tags($body);//remove html tags
-    $body = mysqli_real_escape_string($this->con, $body);
-    $check_empty = preg_replace('/\s+/', '', $body);//deletes spaces
+	public function submitPost($body, $user_to){
+		$body = strip_tags($body);//remove html tags
+		$body = mysqli_real_escape_string($this->con, $body);
+		$check_empty = preg_replace('/\s+/', '', $body);//deletes spaces
 
-    if($check_empty != ""){
+			if($check_empty != ""){
 
-        //Current date and time
-        $date_added =date("Y-m-d H:i:s");
+			//Current date and time
+			$date_added =date("Y-m-d H:i:s");
 
-        //Get username
-        $added_by = $this->user_obj->getUsername();
+			//Get username
+			$added_by = $this->user_obj->getUsername();
 
-        //If user is on own profile, user_to is 'none'
-        if($user_to == $added_by){
-            $user_to = "none";
-        }
-        $sql =  "INSERT INTO posts (body, added_by, user_to, date_added, user_closed, deleted, likes) VALUES ('$body', '$added_by', '$user_to', '$date_added', '0', '0', '0')";
-        //insert post
-        $query = mysqli_query($this->con, $sql);
-        $return_id = mysqli_insert_id($this->con);
+			//If user is on own profile, user_to is 'none'
+				if($user_to == $added_by){
+				$user_to = "none";
+			}
+			$sql =  "INSERT INTO posts (body, added_by, user_to, date_added, user_closed, deleted, likes) VALUES ('$body', '$added_by', '$user_to', '$date_added', '0', '0', '0')";
+			//insert post
+			$query = mysqli_query($this->con, $sql);
+			$return_id = mysqli_insert_id($this->con);
 
-        //Insert notification
-
-
-        //Update  post count of user
-        $num_posts = $this->user_obj->getNumPosts();
-        $num_posts++;
-        $update_query = mysqli_query($this->con, "UPDATE users SET num_posts = '$num_posts' WHERE username ='$added_by'");
-    }
-
-}
-
-public function loadPostsByFriends($requestData, $limit){
-$page = $requestData['page'];
-$profileUser= (isset($requestData['profileUsername'])?$requestData['profileUsername']:false);
+			//Insert notification
 
 
-$userLoggedIn = $this->user_obj->getUsername();
-	
-	if($page == 1){//first item from table 
-	$start = 0;//start of posts
-	}else{
-		$start = ($page - 1) * $limit;//limit= 10
-	}
-    $str ="";
+			//Update  post count of user
+			$num_posts = $this->user_obj->getNumPosts();
+			$num_posts++;
+			$update_query = mysqli_query($this->con, "UPDATE users SET num_posts = '$num_posts' WHERE username ='$added_by'");
+		}
 
-    if($profileUser){
-  	  $data_query = mysqli_query($this->con, "SELECT * FROM posts WHERE deleted ='0' AND ((added_by='$profileUser' AND user_to='none')OR  user_to='$profileUser') ORDER BY id DESC");
+		}
 
-	}else{
-     $data_query = mysqli_query($this->con, "SELECT * FROM posts WHERE deleted ='0' ORDER BY id DESC");
+	public function loadPostsByFriends($requestData, $limit){
+		$page = $requestData['page'];
+		$profileUser= (isset($requestData['profileUsername'])?$requestData['profileUsername']:false);
 
-	}
 
-	if(mysqli_num_rows($data_query) > 0){
+		$userLoggedIn = $this->user_obj->getUsername();
+		
+		if($page == 1){//first item from table 
+		$start = 0;//start of posts
+		}else{
+			$start = ($page - 1) * $limit;//limit= 10
+		}
+		$str ="";
+
+		if($profileUser){
+		$data_query = mysqli_query($this->con, "SELECT * FROM posts WHERE deleted ='0' AND ((added_by='$profileUser' AND user_to='none')OR  user_to='$profileUser') ORDER BY id DESC");
+
+		}else{
+		$data_query = mysqli_query($this->con, "SELECT * FROM posts WHERE deleted ='0' ORDER BY id DESC");
+
+		}
+
+		if(mysqli_num_rows($data_query) > 0){
 		
 		$num_iterations = 0;//Number of results checked (not necessarily posted)
 		
@@ -245,7 +245,7 @@ $userLoggedIn = $this->user_obj->getUsername();
 
    		}
 
-		public function bootBox($id){
+	public function bootBox($id){
 				?>
 							<script>
 								$(document).ready(function(){
@@ -268,7 +268,13 @@ $userLoggedIn = $this->user_obj->getUsername();
 			}
 
 
+	
+
+
+
 }
+
+	
 
 
 ?>

@@ -14,8 +14,6 @@ if(isset($_GET['profile_username'])){
 $ajaxUrl= "includes/handlers/ajax_load_profile_posts.php";
 $ajaxData="$userLoggedIn&profileUsername=$username";
 
-$message_obj = new Message($con, $userLoggedIn);//message object
-
 $user_exists = mysqli_query($con, $sql);
 if(mysqli_num_rows($user_exists)> 0){
 $profile_user = new User($con, $username);
@@ -44,25 +42,10 @@ if(isset($_POST['add_friend'])){
 if(isset($_POST['respond_request'])){
 header("Location: requests.php");
 }
-$activeTab= "in active";
-$changeTab='';
-
-if(isset($_POST['post_message'])){
-    if(isset($_POST['message_body'])){
-        $body= mysqli_real_escape_string($con, $_POST['message_body']);
-        $date= date("Y-m-d H:i:s");
-        $message_obj->sendMessage($username, $body, $date);
-
-    }
-    $changeTab='in active';//hack to change tabs
-    $activeTab='';
-}
 
 
-    
-    
-    
- 
+
+
 //var_dump($user);
 $friendsArray=$profile_user->getFriends();
 
@@ -106,7 +89,7 @@ $friendsArray=$profile_user->getFriends();
         <p>Friends: <?php echo count($friendsArray); ?></p>
        
         <?php }; ?>
-    </div><!--end of profile info-->
+    </div>
     
 
 
@@ -152,83 +135,30 @@ $friendsArray=$profile_user->getFriends();
     <button type='button' class='mutual_friends_btn' data-toggle='modal' data-target='#mutualFriendsModal'>
         <?php echo count($logged_in_user_obj->getMutualFriends($username))." Mutual Friends"; ?>
      </button>
-  </div><!--end of profile_info_bottom-->
+  </div>
   <?php
     }
 
   
    ?>
-
-
+  <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#friendsModal">
+  Launch demo modal
+</button>-->
   
-  </div><!--end of profile_left-->
-
-
-
-
+  </div>
   <div class="main_column column">
-          <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist"  id="profileTabs">
-    <li role="presentation" ><a href="#newsfeed" aria-controls="newsfeed" role="tab" data-toggle="tab">Newsfeed</a></li>
-    <li role="presentation" ><a href="#messages_div" aria-controls="messages_div" role="tab" data-toggle="tab">Messages</a></li>
-  
-  </ul>
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane  <?php echo $activeTab; ?> fade" id="newsfeed">
-      <div class="posts_area"></div>
-	<img id="loading"  src="assets/images/icons/loading.gif">
+<div class="posts_area"></div>
+	<img id="loading"  src="assets/images/icons/loading.gif"/>
 
-  </div><!--end of newsfeed tabpanel-->
-
-
-  <div role="tabpanel" class="tab-pane <?php echo $changeTab; ?> fade" id="messages_div">
-
-      <?php 
-        
-          
-        echo "<h4>You and <a href='".$username."'>".$profile_user->getFullName()."</a></h4><hr>";
-        echo "<div class='loaded_messages' id='scroll_messages'>";
-        echo $message_obj->getMessages($username);
-        echo"</div>";//endof load messages div
-       
-        ?>
-    <div class="message_post">
-       <form action="" method="POST">
-       
-            <textarea name="message_body" id="message_textarea" placeholder="Write your message.."></textarea>
-            <input type="submit" name="post_message" class="info" id="message_submit" value='send'>
-        
-         </form>
-
-        </div><!--end of  message post-->
-<script>
-
-var div = document.querySelector("#scroll_messages");
-
-if(div){
-div.scrollTop = div.scrollHeight;
-}
-function getUsers(value, user) {
-    $.post("./includes/handlers/ajax_friend_search.php", { query:value, userLoggedIn:user },
-        function(data) {
-            $(".results").html(data);
-
-        }
-    );
-}
-
-</script>
-  </div><!--end of tab-->
- 
-</div><!--end of tab content-->
-
-
-</div><!--end of -->
+  </div>
 
 <!-- Modals-->
 <?php include('includes/layouts/boot_modals.php');?>
 
-</div><!--main-column-->
+</div>
+
+</div>
+
 <script type="text/javascript" src="./assets/js/modal_form.js"></script>
 
 

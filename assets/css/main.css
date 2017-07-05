@@ -350,8 +350,9 @@ textarea:focus {
     background-color: #3498db;
 }
 
-.deep_blue {
-    margin: 0 auto;
+.profile_left input[type="submit"].deep_blue {
+    margin: 15px 0 0 9%;
+    width: 75%;
     background-color: #0043f0;
 }
 
@@ -385,4 +386,243 @@ textarea:focus {
     margin-top: 5px;
     position: relative;
     line-height: .8;
+}
+
+.mutual_friends_btn {
+    background-color: #fff;
+    border: none;
+    height: 28px;
+    width: 75%;
+    position: relative;
+    border-radius: 6px;
+    margin: 10px 0 0 9%;
+    color: #0043f0;
+}
+
+.mutualFriendList li {
+    list-style: none;
+    padding: 10px;
+    text-decoration: none;
+    margin: 10px 20px;
+    font-size: 1.5em;
+}
+
+.mutualFriendList li a {
+    text-decoration: none;
+}
+
+.mutualFriendList li a img {
+    width: 70px;
+}
+
+#friendsLink {
+    background-color: transparent;
+    padding: 0;
+    width: 100px;
+    height: 15px;
+    margin-left: 13%;
+    color: #d1e5e8;
+    border: none;
+}
+
+#friendsLink:hover {
+    color: orange;
+}
+
+
+/* Important part */
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.message-box h4,
+.message-box .to-box {
+    margin-bottom: 8px;
+    padding: 0 15px;
+}
+
+.modal-body {
+    height: 75vh;
+    overflow-y: auto;
+}
+
+textarea#message_textarea {
+    width: 78%;
+    margin-right: 6px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #D3D3D3;
+    font-size: 12px;
+    font-family: 'Bellota-BoldItalic', sans-serif;
+    padding: 6px 0 0 5px;
+}
+
+input#message_submit {
+    height: 42px;
+    width: 120px;
+    border-radius: 5px;
+    margin: 0;
+    position: absolute;
+    border: none;
+    color: #fff;
+    font-family: 'Bellota-BoldItalic', sans-serif;
+    text-shadow: #73B6E2 0.5px 0.5px 0px;
+    padding: 5px;
+}
+
+.loaded_messages {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    min-height: 200px;
+    max-height: 468px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.message {
+    /*border: 1px solid #000;*/
+    display: flex;
+    flex-direction: column;
+    min-height: 40px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+    font-family: 'Bellota-BoldItalic', sans-serif;
+}
+
+.message p {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.message#blue p {
+    flex: 1;
+    background-color: #3498db;
+    border-color: #2980b9;
+    align-self: flex-end;
+}
+
+.message#green p {
+    flex: 1;
+    align-self: flex-start;
+    background-color: #2ecc71;
+    border-color: #27ae60;
+}
+
+.message-column {
+    margin: 0;
+    padding: 0;
+}
+
+div#conversations {
+    margin-left: 0;
+    display: block;
+    position: absolute;
+    margin-top: 182px;
+}
+
+div#conversations h4 {
+    text-align: center;
+    padding: 5px 0;
+    color: #888888;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.loaded_conversations {
+    max-height: 390px;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 1.3;
+}
+
+.loaded_conversations a {
+    text-decoration: none;
+    color: #a3a3a3;
+}
+
+.loaded_conversations a:hover {
+    color: #3498db;
+}
+
+.user_found_messages {
+    border-bottom: 1px solid #d3d3d3;
+    padding: 10px 8px 10px 8px;
+}
+
+.user_found_messages .username {
+    color: #2980b9;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.user_found_messages:hover {
+    background-color: #D3D3D3;
+}
+
+.conversation-pic {
+    max-height: 55px;
+    float: left;
+}
+
+a.new-message {
+    margin-left: 28%;
+    line-height: 2.5;
+    color: #A1A1A1;
+    font-weight: bold;
+}
+
+a.new-message:hover {
+    color: #3498db;
+}
+
+.resultDisplay {
+    padding: 10px 5px 0 5px;
+    height: 70px;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.resultDisplay {
+    float: none;
+    text-decoration: none;
+}
+
+.resultDisplay:hover {
+    background-color: #D3D3D3;
+}
+
+.resultDisplay p.grey {
+    color: #A1A1A1
+}
+
+.liveSearchProfilePic img {
+    height: 50px;
+    border-radius: 25px;
+    margin: 0 12px 0 10px;
+    float: left;
+    /*border: 3px solid #3498db;*/
+}
+
+.liveSearchText p {
+    display: inline-block;
+    width: 20%;
+}
+
+.liveSearchText p.name {
+    /*background-color: red;*/
+    margin-top: 15px;
+    font-weight: bolder;
+    margin-left: 5px;
+}
+
+.liveSearchText p.username {
+    font-size: 12px;
+    text-align: center;
+    width: 30%;
+}
+
+.message-box {
+    margin: 0;
 }

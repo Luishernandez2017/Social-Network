@@ -2,8 +2,8 @@
 
 
 class User{
-    private $user;
-    private $con;
+protected $user;
+    public $con;
     private $username;
     private $first_name;
     private $last_name;
@@ -73,9 +73,11 @@ class User{
     public function getfriends(){
         $friends= $this->user['friend_array'];
 		
-        $friendsArray =explode(", ",$friends);
-
-        return $friendsArray;
+    $friendsArray =explode(",",$friends);//convert to array
+    $friendsArray= array_map('trim', $friendsArray);//remove spaces
+    $friendsArray = array_filter($friendsArray);//remove emtpy values
+       
+     return $friendsArray;
 
 
     }
@@ -123,10 +125,14 @@ class User{
 
             //if in array return key and use it to remove value from friend_array
         if (($key = array_search($user_to_remove, $friend_array)) !== false) unset($friend_array[$key]);
-
-        //convert the new array to string 
-        $friend_array_to_string =implode(', ', $friend_array);
         
+        $friend_array= array_map('trim', $friend_array);//remove spaces
+        $friend_array = array_filter($friend_array);//remove emtpy values
+        
+        //convert the new array to string 
+        $friend_array_to_string =implode(',', $friend_array);
+       
+      
         $removeFriendSql ="UPDATE users SET friend_array='$friend_array_to_string' WHERE username ='$user_logged_in'";//query
          $removeSelfSql ="UPDATE users SET friend_array='$friend_array_to_string' WHERE username ='$user_to_remove'";//query
 
@@ -146,8 +152,8 @@ class User{
    public function handleFriendRequest($friend_to_add, $accept='Accept'){
 
             $user_logged_in = $this->user['username'];
-            $addFriendSql ="UPDATE users SET friend_array=CONCAT(friend_array, '$friend_to_add, ') WHERE username ='$user_logged_in'";//query
-            $addSelfSql ="UPDATE users SET friend_array=CONCAT(friend_array, '$user_logged_in, ') WHERE username ='$friend_to_add'";//query
+            $addFriendSql ="UPDATE users SET friend_array=CONCAT(friend_array, '$friend_to_add,') WHERE username ='$user_logged_in'";//query
+            $addSelfSql ="UPDATE users SET friend_array=CONCAT(friend_array, '$user_logged_in,') WHERE username ='$friend_to_add'";//query
             $deleteFriendRequestSql =    "DELETE FROM friend_requests WHERE user_to='$user_logged_in' AND user_from= '$friend_to_add'";
 
      
@@ -172,6 +178,20 @@ class User{
 
 
         }
+        public function getMutualFriends($user_to_check){
+		
+		$mutualFriends ='';//initialize mutual friends to 0
+		$friendsArray = $this->getFriends();//userloggedin friends array
+	
+		$friend= new User($this->con, $user_to_check);//friend
+
+		$friendsFriendsArray=$friend->getfriends();//friend's friends array
+		
+        $mutualFriends= array_intersect($friendsArray, $friendsFriendsArray);//mutual friends
+
+         return $mutualFriends;
+	}
+
 }
 
 
