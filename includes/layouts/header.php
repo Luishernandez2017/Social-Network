@@ -1,29 +1,29 @@
 <?php
- require ('includes/classes/Config.php');
- require('includes/classes/User.php');
- require('includes/classes/Post.php');
- require('includes/classes/Message.php');
+require ('includes/classes/Config.php');
+require ('includes/classes/User.php');
+require ('includes/classes/Post.php');
+require ('includes/classes/Message.php');
 
-// session_destroy();
 
-if(isset($_SESSION['username'])){
+if (isset($_SESSION['username'])) {
     $userLoggedIn = $_SESSION['username'];
-    $user_details_query =mysqli_query($con, "SELECT *FROM users WHERE username='$userLoggedIn'");
+    $user_details_query = mysqli_query($con, "SELECT *FROM users WHERE username='$userLoggedIn'");
 
-    $user = mysqli_fetch_array( $user_details_query);
+    $user = mysqli_fetch_array($user_details_query);
 
-   $user_firstname= $user['first_name'];
-}else{
+    $user_firstname = $user['first_name'];
+}
+else {
     header('location: register.php');
 }
 
 
- $title = (isset($title)?"SN: ".$title:'SN: Home');
+$title = (isset($title) ? "SN: " . $title : 'SN: Home');
 
-function setTitle($title){
-echo  "<title>{$title}</title>";
+function setTitle($title)
+{
+    echo "<title>{$title}</title>";
 }
-
 
 
 ?>
@@ -38,26 +38,32 @@ echo  "<title>{$title}</title>";
     
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <title><?php echo (isset($title)?$title: 'Home'); ?></title>
+         <title><?php echo (isset($title) ? $title : 'Home'); ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+                            <!--General Stylesheets-->
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
+
+                             <!--General Scripts-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/js/jcrop_bits.js"></script>
 <script type="text/javascript" src="assets/js/jquery.Jcrop.js"></script>
-<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
      
     </head>
+
     <body>
 
     <?php 
-    $addNav=(isset($addNav)?$addNav:true) ;
-    if($addNav){
-         include('nav.php');
-        }; ?>
+    $addNav = (isset($addNav) ? $addNav : true);
+    if ($addNav) {
+        include ('nav.php');
+    }; ?>
+  
      <div class="wrapper">
 
      <!--[if lt IE 7]>

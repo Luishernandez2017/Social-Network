@@ -23,10 +23,10 @@
 			}
 			
 		});
-		
+		var win =document.defaultView;
 		
 		//ON SCROLL
-		$(window).scroll(function(){
+		$(win).scroll(function(){
 			
 			var height = $('.posts_area').height();//div containing posts
 			

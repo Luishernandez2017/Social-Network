@@ -1,0 +1,164 @@
+.user_details {
+    width: 250px;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.user_details_left_right {
+    width: 125px;
+    display: inline-table;
+    position: absolute;
+}
+
+.user_details img {
+    /*flex: 3;*/
+    height: 125px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.profile_left input[type="submit"] {
+    width: 80%;
+    height: 30px;
+    border-radius: 5px;
+    margin: 7px 0 0 7px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.profile_left {
+    top: -10px;
+    width: 35%;
+    max-width: 300px;
+    min-width: 130px;
+    min-height: 100vh;
+    float: left;
+    position: relative;
+    background-color: #3498db;
+    border-right: 10px solid;
+    color: #cbeaf8;
+    margin-right: 20px;
+    padding-top: 40px;
+}
+
+.profile_left {
+    position: absolute;
+    left: 0;
+    margin-top: 0;
+    margin-right: 50px;
+    /*padding: 50px 0 0 50px;*/
+}
+
+.profile_left form {
+    padding-left: 20px;
+    /*padding: 50px 0 0 50px ;*/
+}
+
+.profile_left img {
+    min-width: 80px;
+    width: 45%;
+    border: 5px solid #83d6fe;
+    border-radius: 100px;
+    margin-left: 22%;
+    margin-bottom: 15px;
+}
+
+.profile_info {
+    display: list-item;
+    text-decoration: none;
+    list-style: none;
+    background-color: #005288;
+    width: 100%;
+    line-height: 1.5;
+    padding: 20px 0;
+}
+
+.profile_info p {
+    margin-left: 20px;
+    word-wrap: break-word;
+    margin-left: 20%;
+}
+
+.profile_left input[type="submit"].deep_blue {
+    margin: 15px 0 0 9%;
+    width: 75%;
+    background-color: #0043f0;
+}
+
+.mutual_friends_btn {
+    background-color: #fff;
+    border: none;
+    height: 28px;
+    width: 75%;
+    position: relative;
+    border-radius: 6px;
+    margin: 10px 0 0 9%;
+    color: #0043f0;
+}
+
+.mutualFriendList li {
+    list-style: none;
+    padding: 10px;
+    text-decoration: none;
+    margin: 10px 20px;
+    font-size: 1.5em;
+}
+
+.mutualFriendList li a {
+    text-decoration: none;
+}
+
+.mutualFriendList li a img {
+    width: 70px;
+}
+
+#friendsLink {
+    background-color: transparent;
+    padding: 0;
+    width: 100px;
+    height: 15px;
+    margin-left: 13%;
+    color: #d1e5e8;
+    border: none;
+}
+
+#friendsLink:hover {
+    color: orange;
+}
+
+
+/*************************************************
+                    MODALS
+**************************************************/
+
+
+/* Important part */
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.message-box h4,
+.message-box .to-box {
+    margin-bottom: 8px;
+    padding: 0 15px;
+}
+
+.modal-body {
+    height: 75vh;
+    overflow-y: auto;
+}
+
+
+/*************************************************
+                    TABS
+**************************************************/
+
+.nav-tabs {
+    margin-bottom: 20px;
+}
+
+.nav-tabs li a:hover {
+    background-color: rgba(41, 128, 182, 0.3);
+}

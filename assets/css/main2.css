@@ -1,0 +1,23 @@
+/*general*/
+
+@import url('style.css');
+
+/*nav bar */
+
+@import url('nav_bar.css');
+
+/*notifications*/
+
+@import url('notifications.css');
+
+/*posts*/
+
+@import url('post.css');
+
+/*messages */
+
+@import url('messages.css');
+
+/*nav bar */
+
+@import url('profile.css');

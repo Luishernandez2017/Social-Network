@@ -124,15 +124,14 @@ $count = mysqli_num_rows($get_comments);//number of comments per user
 
 </div>
                    <br/>
-                   <?php
-                }
-              
+         <?php
+                } 
               
             }else{
                 echo "<center style='color: #ACACAC'><br><br><br>No comments to show.</center>";
             }
 
-?>
+            ?>
 
 
 </div>
