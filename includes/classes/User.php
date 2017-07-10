@@ -9,7 +9,7 @@ protected $user;
     private $last_name;
     private $email;
     private $num_posts;
-    private  $num_likes;
+    private $num_likes;
     private $friend_array;
     private $user_closed;
 
@@ -24,15 +24,15 @@ protected $user;
 
             $this->user = mysqli_fetch_array($user_details_query);
        
-    }
+     }
     public function getUsername(){
         return $this->user['username'];
-    }
+     }
 
     public function getUser($property){
        return $this->user[$property];
 
-    }
+     }
  
 
     public function getFullName(){
@@ -40,26 +40,38 @@ protected $user;
         $query = mysqli_query($this->con, "SELECT first_name, last_name FROM users WHERE username ='$username'");
         $row = mysqli_fetch_array($query);
         return $row['first_name']." ".$row['last_name'];
-    }
+     }
 
-   public function getUserPic(){
+    public function getUserPic(){
         $username = $this->user['username'];
         $query = mysqli_query($this->con, "SELECT profile_pic FROM users WHERE username ='$username'");
         $row = mysqli_fetch_array($query);
         return $row['profile_pic'];
-    }
+     }
 
     public function getNumPosts(){
         $username = $this->user['username'];
         $query =  mysqli_query($this->con, "SELECT num_posts FROM users WHERE username ='$username'");
         $row = mysqli_fetch_array($query);
         return $row['num_posts'];
+     }
+    public function getNumOfFriendRequests(){
+        $username = $this->user['username'];
+        $query =  mysqli_query($this->con, "SELECT * FROM friend_requests WHERE user_to='$username'");
+       return mysqli_num_rows($query);
     }
+    public function getNumLikes(){
+        $username = $this->user['username'];
+        $query =  mysqli_query($this->con, "SELECT num_likes FROM users WHERE username ='$username'");
+        $row = mysqli_fetch_array($query);
+        return $row['num_likes'];
+     }
 
-    public function isClosed(){
+
+    public function isClosed(){ 
         $username = $this->user['username'];
         $query = mysqli_query($this->con, "SELECT user_closed FROM users WHERE username ='$username'");
-    $row = mysqli_fetch_array($query);
+     $row = mysqli_fetch_array($query);
 
         if($row['user_closed']){
             return true;
@@ -67,20 +79,20 @@ protected $user;
         }else{
             return false;
         }
-    }
+     }
 	
 
     public function getfriends(){
         $friends= $this->user['friend_array'];
 		
-    $friendsArray =explode(",",$friends);//convert to array
-    $friendsArray= array_map('trim', $friendsArray);//remove spaces
-    $friendsArray = array_filter($friendsArray);//remove emtpy values
-       
-     return $friendsArray;
+        $friendsArray =explode(",",$friends);//convert to array
+        $friendsArray= array_map('trim', $friendsArray);//remove spaces
+        $friendsArray = array_filter($friendsArray);//remove emtpy values
+        
+        return $friendsArray;
 
 
-    }
+     }
 
     public function didReceiveRequest($user_from){
          $user_to = $this->user['username'];
@@ -90,10 +102,10 @@ protected $user;
          }else{
              return false;
          }
-   }
+     }
 
 
-     public function didSendRequest($user_to){
+    public function didSendRequest($user_to){
          $user_from = $this->user['username'];
          $check_request_query = mysqli_query($this->con, "SELECT * FROM friend_requests WHERE user_to='$user_to' AND user_from='$user_from'");
          if(mysqli_num_rows($check_request_query) > 0){
@@ -101,7 +113,7 @@ protected $user;
          }else{
              return false;
          }
-   }
+     }
 	public function isFriend($username_to_check){
 	
         $friendsArray =$this->getfriends();
@@ -141,15 +153,15 @@ protected $user;
 
         
         }
-    }
+     }
 
     public function sendRequest($user_to){
         $user_from = $this->user['username'];
 
         $sql ="INSERT INTO friend_requests (user_to, user_from) VALUES ('$user_to', '$user_from')";
         $sendRequest=mysqli_query($this->con, $sql);
-   }
-   public function handleFriendRequest($friend_to_add, $accept='Accept'){
+     }
+    public function handleFriendRequest($friend_to_add, $accept='Accept'){
 
             $user_logged_in = $this->user['username'];
             $addFriendSql ="UPDATE users SET friend_array=CONCAT(friend_array, '$friend_to_add,') WHERE username ='$user_logged_in'";//query
@@ -178,7 +190,7 @@ protected $user;
 
 
         }
-        public function getMutualFriends($user_to_check){
+    public function getMutualFriends($user_to_check){
 		
 		$mutualFriends ='';//initialize mutual friends to 0
 		$friendsArray = $this->getFriends();//userloggedin friends array
@@ -190,7 +202,7 @@ protected $user;
         $mutualFriends= array_intersect($friendsArray, $friendsFriendsArray);//mutual friends
 
          return $mutualFriends;
-	}
+	 }
 
 }
 

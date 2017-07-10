@@ -2,6 +2,7 @@
 include('../classes/Config.php');
 include('../classes/User.php');
 include('../classes/Post.php');
+include('../classes/Notification.php');
 
 $limit = 10;//limit number of posts
 

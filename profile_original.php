@@ -5,7 +5,7 @@ require('./includes/layouts/header.php');
 
 <?php 
 
-
+  $user = new User($con, $userLoggedIn);
 if(isset($_GET['profile_username'])){
 
     $username= $_GET['profile_username'];
@@ -24,18 +24,18 @@ $profile_user = new User($con, $username);
 
 
 if(isset($_POST['remove_friend'])){
-    $user = new User($con, $userLoggedIn);
+
     $user->removeFriend($username);
 }
 
 
 if(isset($_POST['remove_friend'])){
-    $user = new User($con, $userLoggedIn);
+
     $user->removeFriend($username);
 }
 
 if(isset($_POST['add_friend'])){
-    $user = new User($con, $userLoggedIn);
+    
     $user->sendRequest($username);
 }
 
@@ -128,14 +128,18 @@ $friendsArray=$profile_user->getFriends();
     ?>
     
  </form>
+
+ 
  <input type="submit" class="deep_blue" data-toggle="modal" data-target="#myPostModalForm" value="Post Something">
   <?php 
+ 
     if($userLoggedIn != $username){?>
    <div class='profile_info_bottom' >
     <button type='button' class='mutual_friends_btn' data-toggle='modal' data-target='#mutualFriendsModal'>
         <?php echo count($logged_in_user_obj->getMutualFriends($username))." Mutual Friends"; ?>
      </button>
   </div>
+ 
   <?php
     }
 

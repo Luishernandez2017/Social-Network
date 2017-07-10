@@ -13,14 +13,17 @@
 
 				var pageName; //Holds name of page to send ajax request to
 				var type = $('#dropdown_data_type').val();
+//console.log(type);
 
-
-				if(type == 'notification')
+				if(type == 'notification'){
 					pageName = "ajax_load_notifications.php";
-				else if(type = 'message')
-					pageName = "ajax_load_messages.php"
 
+				}else if(type == 'message'){
+					 pageName = "ajax_load_messages.php";
+						// pageName = "ajax_load_notifications.php";
+				}
 
+//console.log(pageName);
 				var ajaxReq = $.ajax({
 					url: "includes/handlers/" + pageName,
 					type: "POST",

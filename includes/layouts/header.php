@@ -3,6 +3,7 @@ require ('includes/classes/Config.php');
 require ('includes/classes/User.php');
 require ('includes/classes/Post.php');
 require ('includes/classes/Message.php');
+require ('includes/classes/Notification.php');
 
 
 if (isset($_SESSION['username'])) {
@@ -48,11 +49,12 @@ function setTitle($title)
 <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 
                              <!--General Scripts-->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/js/jcrop_bits.js"></script>
 <script type="text/javascript" src="assets/js/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
      
     </head>
 

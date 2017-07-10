@@ -4,7 +4,7 @@ require('./includes/layouts/header.php');
  ?>
 
 <?php 
-
+   $user = new User($con, $userLoggedIn);
 
 if(isset($_GET['profile_username'])){
 
@@ -26,18 +26,18 @@ $profile_user = new User($con, $username);
 
 
 if(isset($_POST['remove_friend'])){
-    $user = new User($con, $userLoggedIn);
+ 
     $user->removeFriend($username);
 }
 
 
 if(isset($_POST['remove_friend'])){
-    $user = new User($con, $userLoggedIn);
+    
     $user->removeFriend($username);
 }
 
 if(isset($_POST['add_friend'])){
-    $user = new User($con, $userLoggedIn);
+  
     $user->sendRequest($username);
 }
 
@@ -145,8 +145,11 @@ $friendsArray=$profile_user->getFriends();
     ?>
     
  </form>
+ 
+ <?php if($user->isFriend($profile_user->getUsername())){ ?>
  <input type="submit" class="deep_blue" data-toggle="modal" data-target="#myPostModalForm" value="Post Something">
   <?php 
+ }
     if($userLoggedIn != $username){?>
    <div class='profile_info_bottom' >
     <button type='button' class='mutual_friends_btn' data-toggle='modal' data-target='#mutualFriendsModal'>
@@ -175,22 +178,25 @@ $friendsArray=$profile_user->getFriends();
   </ul>
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane  <?php echo $activeTab; ?> fade" id="newsfeed">
+      <?php if($user->isFriend($profile_user->getUsername())){ ?>
       <div class="posts_area"></div>
 	<img id="loading"  src="assets/images/icons/loading.gif">
+   <?php }else{
+      echo "<p> Profile is set to private. You must be friends with ".$profile_user->getFullName()." in order to view his posts.</p>";
+       }
+       ?>
 
   </div><!--end of newsfeed tabpanel-->
-
-
+   
   <div role="tabpanel" class="tab-pane <?php echo $changeTab; ?> fade" id="messages_div">
 
       <?php 
         
-          
+  if($user->isFriend($profile_user->getUsername())){ 
         echo "<h4>You and <a href='".$username."'>".$profile_user->getFullName()."</a></h4><hr>";
         echo "<div class='loaded_messages' id='scroll_messages'>";
         echo $message_obj->getMessages($username);
         echo"</div>";//endof load messages div
-       
         ?>
     <div class="message_post">
        <form action="" method="POST">
@@ -199,6 +205,10 @@ $friendsArray=$profile_user->getFriends();
             <input type="submit" name="post_message" class="info" id="message_submit" value='send'>
         
          </form>
+    <?php }else{
+      echo "<p> Profile is set to private. You must be friends with ".$profile_user->getFullName()." in order to send him messages.</p>";
+       }
+       ?>
 
         </div><!--end of  message post-->
 <script>

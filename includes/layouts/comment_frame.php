@@ -4,6 +4,7 @@ require ('../classes/Config.php');
 include_once('../classes/functions.php');//require cuae redeclaration of function
 require('../classes/User.php');
 require('../classes/Post.php');
+require('../classes/Notification.php');
 ?>
 <html lang="en">
 <head>
@@ -62,38 +63,76 @@ if(isset($_SESSION['username'])){
     $row = mysqli_fetch_array($user_query);
 
     $posted_to = $row['added_by'];
+    $user_to = $row['user_to'];
 
-if(isset($_POST['postComment'.$post_id])){
-    $post_body = $_POST['post_body'];
-    $post_body = mysqli_escape_string($con, $post_body);
-    $date_time_now = date("Y-m-d H:i:s");
+    if(isset($_POST['postComment'.$post_id])){
+        $post_body = $_POST['post_body'];
+        $post_body = mysqli_escape_string($con, $post_body);
+        $date_time_now = date("Y-m-d H:i:s");
 
-    $sql = "INSERT INTO comments (post_body, posted_by, posted_to, date_added, removed, post_id) 
-    VALUES ('$post_body', '$userLoggedIn', '$posted_to', '$date_time_now', '0', '$post_id') ";
+        $sql = "INSERT INTO comments (post_body, posted_by, posted_to, date_added, removed, post_id) 
+        VALUES ('$post_body', '$userLoggedIn', '$posted_to', '$date_time_now', '0', '$post_id') ";
 
-    $insert_post = mysqli_query($con, $sql);
+        $insert_post = mysqli_query($con, $sql);
 
-    echo "<p>Comment Posted!</p>";
-}
-?>
+        //insert notifications for comment      
+        if($posted_to != $userLoggedIn){
+            $notfication = new Notification($con, $userLoggedIn);
+            $notfication->insertNotification($post_id, $posted_to, "comment");
+        }
+
+        //insert notifications for  profile comment   
+        if($user_to != 'none' && $user_to != $userLoggedIn){
+            $notfication = new Notification($con, $userLoggedIn);
+            $notfication->insertNotification($post_id, $user_to, "profile_comment");
+        }
 
 
-    <form action="comment_frame.php?post_id=<?php echo $post_id; ?>"  id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
+        //select everyone who posted
+        $commentersSql = "SELECT * FROM comments  WHERE post_id='$post_id'";
+        $get_commenters = mysqli_query($con, $commentersSql);
+        $notified_users = array();
 
-<textarea name="post_body" placeholder="post comment"></textarea>
+        while($row = mysqli_fetch_array($get_commenters)){
+            //if person who posted comment is not the person who posted original post
+            //&& if person who posted comment is not the person who owns profile post
+            //&& person who posted is not  himself/herself 
+            //&& persons name is not already in the array
+            if($row['posted_by'] != $posted_to && $row['posted_by'] !=  $user_to
+            && $row['posted_by'] != $userLoggedIn && !in_array($row['posted_by'] , $notified_users)){
+            
+            $notfication = new Notification($con, $userLoggedIn);
+            $notfication->insertNotification($post_id, $row['posted_by'], "comment_non_owner");
+                
+            array_push($notified_users, $row['posted_by']);
 
-<input type="submit" name="postComment<?php echo $post_id; ?>" value="Post">
+            }
+        }
 
-    </form>
-<!--- Load Comments-->
+            
+        
 
-<?php
-//echo $post_id;
-$sql = "SELECT * FROM comments WHERE post_id= '$post_id' ORDER BY date_added DESC";
-$get_comments  = mysqli_query($con, $sql);
+        echo "<p>Comment Posted!</p>";
+    }
+    ?>
 
-//var_dump(mysqli_error($con));
-$count = mysqli_num_rows($get_comments);//number of comments per user
+
+        <form action="comment_frame.php?post_id=<?php echo $post_id; ?>"  id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
+
+    <textarea name="post_body" placeholder="post comment"></textarea>
+
+    <input type="submit" name="postComment<?php echo $post_id; ?>" value="Post">
+
+        </form>
+    <!--- Load Comments-->
+
+    <?php
+    //echo $post_id;
+    $sql = "SELECT * FROM comments WHERE post_id= '$post_id' ORDER BY date_added DESC";
+    $get_comments  = mysqli_query($con, $sql);
+
+    //var_dump(mysqli_error($con));
+    $count = mysqli_num_rows($get_comments);//number of comments per user
 
             if($count != 0){
                 while($comment = mysqli_fetch_array($get_comments)){

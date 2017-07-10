@@ -124,6 +124,7 @@ class Message extends User{
     }
     public function getConversationsDropdown($data, $limit){
         $page = $data['page'];
+       
 
         $userLoggedIn= $this->getUsername();
         $output = "" ;
@@ -133,12 +134,13 @@ class Message extends User{
                 $start = 0;
                 
             }else{
-                $start =($page-1)*$limit;
+                $start = ($page - 1) * $limit;
             }
+    
             $viewedSql= "UPDATE messages SET viewed=1 WHERE user_to='$userLoggedIn'";
 
             $set_view_query = mysqli_query($this->con, $viewedSql);
-$conSql="SELECT user_to, user_from FROM messages WHERE user_to='$userLoggedIn' OR user_from='$userLoggedIn' ORDER BY id DESC";
+        $conSql="SELECT user_to, user_from FROM messages WHERE user_to='$userLoggedIn' OR user_from='$userLoggedIn' ORDER BY id DESC";
         $con_query= mysqli_query($this->con, $conSql);
 
         while($row = mysqli_fetch_array($con_query)){
@@ -162,6 +164,7 @@ $conSql="SELECT user_to, user_from FROM messages WHERE user_to='$userLoggedIn' O
             }else{
                 $count++;
             }
+        
 
             $unreadSql="SELECT opened FROM messages WHERE user_to='$userLoggedIn' AND user_from='$username' ORDER BY id DESC ";
             $is_unread_query= mysqli_query($this->con, $unreadSql);
@@ -198,15 +201,16 @@ $conSql="SELECT user_to, user_from FROM messages WHERE user_to='$userLoggedIn' O
 
         //if Posts were loaded 
         if($count > $limit){
-            $output .="<input type='hidden' class='nextPageDropdownData' value='".($page+1)."'>";
+            $output .="<input type='hidden' class='nextPageDropdownData' value='".($page +1 )."'>";
             $output .="<input type='hidden' class='noMoreDropdownData' value='false'>";
+       
         }else{
               //if Posts were loaded 
-        if($count > $limit){
+
 
             $output .="<input type='hidden' class='noMoreDropdownData' value='true'>";
-            $output .="<p style='text-align: center;'> No more messages to load!</p>";
-        }
+            $output .="<p style='text-align: center; color: #D3D3D3;'> No more messages to load!</p>";
+        
         }
 
         return $output;

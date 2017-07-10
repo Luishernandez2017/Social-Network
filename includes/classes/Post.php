@@ -35,7 +35,10 @@ class Post{
 			$return_id = mysqli_insert_id($this->con);
 
 			//Insert notification
-
+			if($user_to != 'none'){
+				$notification = new Notification($this->con, $added_by);
+				$notification->insertNotification($return_id, $user_to, "profile_post");//last post id
+			}
 
 			//Update  post count of user
 			$num_posts = $this->user_obj->getNumPosts();
@@ -126,7 +129,6 @@ class Post{
 						$str .= $this->createOutput($id, $userLoggedIn, $added_by, $user_to, $body, $date_time);
 				
 
-			
 						}
 					}else{
 							$user_to='';
@@ -148,8 +150,7 @@ class Post{
 
 					}
 
-							$this->bootBox($id);//BootBox javascript nested inside php
-				
+							
 							}
 							if($count > $limit){
 								$str .= "<input type='hidden' class='nextPage' value='".($page+1)."'/>";
@@ -158,11 +159,13 @@ class Post{
 								$str .= "<input type='hidden' class='noMorePosts' value='true'/>";
 								$str .= "<p class='no-posts' style='color: #ACACAC;'> No more Posts to show!</p>";
 							}
+							
      			}// end of While Loop
 					echo $str;
-	
+				
+				
    		}//end of loadPostsByFriends block
-   			public function createOutput($id, $userLoggedIn, $added_by, $user_to, $body, $date_time){
+   	public function createOutput($id, $userLoggedIn, $added_by, $user_to, $body, $date_time){
 	   		
 			   if($userLoggedIn == $added_by){
 						$delete_button = "<button class='delete_button btn-danger' id='post$id'> X </button>";
@@ -215,9 +218,9 @@ class Post{
 					$str .="</div>";
 				
 					$str .="<hr/>";
-					
+					$this->bootBox($id);//BootBox javascript nested inside php
 					return $str;
-   	}
+   		}
    	public function toggleComments($id){
 	   ?>
 		<script>
@@ -266,7 +269,71 @@ class Post{
 			 <?php
 
 			}
+	public function getSinglePost($post_id){
 
+		$userLoggedIn = $this->user_obj->getUsername();
+		$openSql ="UPDATE notifications SET opened=1 WHERE user_to='$userLoggedIn' AND link LIKE '%=$post_id'";
+		$opened_query = mysqli_query($this->con, $openSql);
+		// var_dump(mysqli_num_rows($opened_query));
+		$str ="";
+
+	
+		$data_query = mysqli_query($this->con, "SELECT * FROM posts WHERE deleted ='0' AND  id='$post_id'");
+
+	
+
+		if(mysqli_num_rows($data_query) > 0){
+		
+
+		
+			$row = mysqli_fetch_array($data_query);
+			  $id =  $row['id'];
+			  $body=  $row['body'];
+			  $added_by =  $row['added_by'];
+			  $date_time= $row['date_added'];
+			
+					//prepare user to string so it can be included even if not posted to a user
+					if($row['user_to'] == 'none'){
+							$user_to = '';
+
+					}else{
+						$user_to_obj = new User($this->con, $row['user_to']);
+						$user_full_name= $user_to_obj->getFullName();
+						$user_to=" to <a href='".$row['user_to']."'>". $user_full_name."</a>";
+					}
+				
+
+				//Check if user who posted, has their account closed
+				$added_by_obj = new User($this->con, $added_by);
+				if($added_by_obj->isClosed()){
+					return;
+					}
+				
+					$user_logged_obj = new User($this->con, $userLoggedIn);
+					//end  if profileUser
+
+							
+					//var_dump($this->user_obj->getUsername());
+						if($user_logged_obj->isFriend($added_by)){
+
+						$str .= $this->createOutput($id, $userLoggedIn, $added_by, $user_to, $body, $date_time);
+						
+						}else{
+							// $str .= "<p>You must be friends with user:<a href='$added_by'> ".$added_by."</a> in order to see post... send request?</p>";
+								$str .= "<p>You must be friends with user in order to see post... send request?</p>";
+							
+						}
+					$this->bootBox($id);//BootBox javascript nested inside php
+				
+							
+     			}else{
+
+					 $str .="<p>Whoops! No post found. Link could be broken...</p>";
+
+			}// end if statement
+					echo $str;
+	
+	}
 
 	
 

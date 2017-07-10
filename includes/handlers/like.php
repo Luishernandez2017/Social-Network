@@ -4,6 +4,7 @@ require ('../classes/Config.php');
 include_once('../classes/functions.php');//require cuae redeclaration of function
 require('../classes/User.php');
 require('../classes/Post.php');
+require('../classes/Notification.php');
 ?>
 <html lang="en">
 <head>
@@ -20,7 +21,7 @@ require('../classes/Post.php');
 
 
         
-        	* {
+    * {
 		font-family: Arial, Helvetica, Sans-serif;
 	}
 	body {
@@ -33,20 +34,20 @@ require('../classes/Post.php');
 	}
 
 
-.comment_like {
-    background-color: #fff;
-    font-size: 14px;
-    border: none;
-    color: #3498db;
-    padding: 0;
-}
+    .comment_like {
+        background-color: #fff;
+        font-size: 14px;
+        border: none;
+        color: #3498db;
+        padding: 0;
+    }
 
-.like_value {
-    display: inline;
-    font-size: 14px;
-        line-height: 1.8;
-    
-}
+    .like_value {
+        display: inline;
+        font-size: 14px;
+            line-height: 1.8;
+        
+    }
 
         
         </style>
@@ -54,16 +55,16 @@ require('../classes/Post.php');
 <?php
 // session_destroy();
 
-if(isset($_SESSION['username'])){
-    $userLoggedIn = $_SESSION['username'];
-    $user_details_query =mysqli_query($con, "SELECT *FROM users WHERE username='$userLoggedIn'");
+    if(isset($_SESSION['username'])){
+        $userLoggedIn = $_SESSION['username'];
+        $user_details_query =mysqli_query($con, "SELECT *FROM users WHERE username='$userLoggedIn'");
 
-    $user = mysqli_fetch_array( $user_details_query);
+        $user = mysqli_fetch_array( $user_details_query);
 
-   $user_firstname= $user['first_name'];
-}else{
-    header('location: register.php');
-}
+        $user_firstname= $user['first_name'];
+    }else{
+        header('location: register.php');
+    }
 
 
 
@@ -73,24 +74,25 @@ if(isset($_SESSION['username'])){
         $post_id =$_GET['post_id'];
     }
 
-//Like query
-$sql ="SELECT likes, added_by FROM posts WHERE id='$post_id'";
-    $get_likes = mysqli_query($con, $sql);
-    $row = mysqli_fetch_array($get_likes);
-    $total_likes = $row['likes'];
-    $user_liked = $row['added_by'];
-    
-    //echo    $total_likes = $row['likes'];
-   $user_liked = $row['added_by'];
-    
+    //Like query
+    $sql ="SELECT likes, added_by FROM posts WHERE id='$post_id'";
+        $get_likes = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($get_likes);
+        $total_likes = $row['likes'];
+        $user_liked = $row['added_by'];
+        
+            //echo    $total_likes = $row['likes'];
+        $user_liked = $row['added_by'];
+            
 
 
-//User details
-    $details_sql = "SELECT * FROM users WHERE username = '$user_liked'";
-    $user_details_query= mysqli_query($con, $details_sql );
-    $userRow= mysqli_fetch_array($user_details_query);
-    $total_user_likes= $userRow['num_likes'];
-//echo $total_likes;
+    //User details
+        $details_sql = "SELECT * FROM users WHERE username = '$user_liked'";
+        $user_details_query= mysqli_query($con, $details_sql );
+        $userRow= mysqli_fetch_array($user_details_query);
+        $total_user_likes= $userRow['num_likes'];
+    //echo $total_likes;
+    
     //like button 
     if(isset($_POST['like_button'])){
         $total_likes++ ;
@@ -101,7 +103,12 @@ $sql ="SELECT likes, added_by FROM posts WHERE id='$post_id'";
         $insert_user = mysqli_query($con, "INSERT INTO likes (username, post_id ) VALUES ('$userLoggedIn', '$post_id')");
         echo ($insert_user);
         //insert notification
-  }
+  
+        if($user_liked != $userLoggedIn){
+            $notfication = new Notification($con, $userLoggedIn);
+            $notfication->insertNotification($post_id, $user_liked, "like");
+        }
+    }
 
     //unlike button
         //like button 
@@ -113,8 +120,12 @@ $sql ="SELECT likes, added_by FROM posts WHERE id='$post_id'";
         $user_likes = mysqli_query($con, "UPDATE users SET num_likes='$total_user_likes' WHERE username='$user_liked'");
         $insert_user = mysqli_query($con,  "DELETE FROM  likes WHERE username='$userLoggedIn' AND post_id='$post_id'");
         
-        //insert notification
-  }
+        // //insert notification
+        // if($user_liked != 'none'){
+        //     $notfication = new Notification($this->con, $userLoggedIn);
+        //     $notfication->insertNotification($post_id, $user_to, "like");
+        // }
+    }
 
 
 
